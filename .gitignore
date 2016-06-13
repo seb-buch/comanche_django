@@ -91,3 +91,6 @@ ENV/
 # pycharm project
 .idea
 
+# Secret stuff
+mysecrets.py
+

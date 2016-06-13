@@ -1,58 +1,70 @@
-from django.http import HttpResponse
-from django.template import loader
+from django.shortcuts import render
+from django.contrib.auth import logout, authenticate, login
 
 from . import __version__
 
 
-def get_common_context():
-    return {
+def get_common_context(request):
+    context = {
         'version': __version__
     }
 
+    try:
+        if request.POST["what"] == "login":
+            user = authenticate(username=request.POST["username"], password=request.POST["password"])
+            if user is None:
+                context["login_warning"] = "invalid username/password!"
+            elif user.is_active:
+                login(request, user)
+            else:
+                context["login_warning"] = "your acoount is disabled!"
+    except KeyError:
+        pass
+
+    return context
+
 
 def index(request):
-    template = loader.get_template('comancheapp/index.html')
-    context = get_common_context()
-    return HttpResponse(template.render(context, request))
+    context = get_common_context(request)
+    return render(request, "comancheapp/index.html", context)
 
 
 def equilibration(request):
-    template = loader.get_template('comancheapp/equilibration.html')
-    context = get_common_context()
-    return HttpResponse(template.render(context, request))
+    context = get_common_context(request)
+    return render(request, "comancheapp/equilibration.html", context)
 
 
 def insertion(request):
-    template = loader.get_template('comancheapp/insertion.html')
-    context = get_common_context()
-    return HttpResponse(template.render(context, request))
+    context = get_common_context(request)
+    return render(request, "comancheapp/insertion.html", context)
 
 
 def umbrella(request):
-    template = loader.get_template('comancheapp/umbrella.html')
-    context = get_common_context()
-    return HttpResponse(template.render(context, request))
+    context = get_common_context(request)
+    return render(request, "comancheapp/umbrella.html", context)
 
 
 def lipids(request):
-    template = loader.get_template('comancheapp/lipids.html')
-    context = get_common_context()
-    return HttpResponse(template.render(context, request))
+    context = get_common_context(request)
+    return render(request, "comancheapp/lipids.html", context)
 
 
 def membranes(request):
-    template = loader.get_template('comancheapp/membranes.html')
-    context = get_common_context()
-    return HttpResponse(template.render(context, request))
+    context = get_common_context(request)
+    return render(request, "comancheapp/membranes.html", context)
 
 
 def forcefields(request):
-    template = loader.get_template('comancheapp/forcefields.html')
-    context = get_common_context()
-    return HttpResponse(template.render(context, request))
+    context = get_common_context(request)
+    return render(request, "comancheapp/forcefields.html", context)
 
 
 def jobs(request):
-    template = loader.get_template('comancheapp/jobs.html')
-    context = get_common_context()
-    return HttpResponse(template.render(context, request))
+    context = get_common_context(request)
+    return render(request, "comancheapp/jobs.html", context)
+
+
+def logout(request):
+    logout(request)
+    context = get_common_context(request)
+    return render(request, "comancheapp/in.html", context)

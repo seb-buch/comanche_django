@@ -125,3 +125,17 @@ STATICFILES_FINDERS = [
     'django.contrib.staticfiles.finders.FileSystemFinder',
     'django.contrib.staticfiles.finders.AppDirectoriesFinder'
 ]
+
+
+# Settings for django-registration
+ACCOUNT_ACTIVATION_DAYS = 7  # One-week activation window
+
+# Setting for email
+from .mysecrets import gmail_account, gmail_password
+EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+EMAIL_USE_TLS = True
+EMAIL_HOST = 'smtp.gmail.com'
+EMAIL_PORT = 587
+EMAIL_HOST_USER = gmail_account
+EMAIL_HOST_PASSWORD = gmail_password
+

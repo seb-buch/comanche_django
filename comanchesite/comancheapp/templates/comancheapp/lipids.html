@@ -1,3 +1,45 @@
-{% extends "comancheapp/base.html" %}
+{% extends "base.html" %}
 
 {% block title %}Lipids{% endblock %}
+
+{% block content %}
+    <form method='POST'>
+        <table>
+            <tr>
+                <td>Forcefield :</td>
+                <td>
+                    <select name="forcefield">
+                        <option value="-1" selected>--</option>
+                        {% for forcefield in forcefields %}
+                            <option value="{{ forcefield.id }}">{{ forcefield.name }}</option>
+                        {% endfor %}
+                    </select>
+                </td>
+            </tr>
+            <tr>
+                <td><input type='submit' name='submit' value='Select'></td>
+            </tr>
+        </table>
+    </form>
+
+    <table class=center border="1" cellspacing="2" cellpadding="0">
+    <tr>
+        <td align="center" bgcolor="#65a9d7"><strong>Id</strong></td>
+        <td align="center" bgcolor="#65a9d7"><strong>Common name</strong></td>
+        <td align="center" bgcolor="#65a9d7"><strong>Systematic name</strong></td>
+        <td align="center" bgcolor="#65a9d7"><strong>formula</strong></td>
+        <td align="center" bgcolor="#65a9d7"><strong>Lipid Maps ID</strong></td>
+    </tr>
+
+
+    <tr>
+        <td><strong><a href='index.php?page=lipid&id=<?php echo $rows[' lmid'];
+            ?>'><?php echo $rows['id']; ?></a></td>
+        <td><strong><?php echo $rows['commonname']; ?></td>
+        <td><strong><?php echo $rows['systematicname']; ?></td>
+        <td><strong><?php echo $rows['formula']; ?></td>
+        <td><strong><a href='<?php echo $rows[' lipidmapsurl']; ?>'><?php echo $rows['lmid']; ?></a>
+        </td>
+    </tr>
+
+{% endblock %}
